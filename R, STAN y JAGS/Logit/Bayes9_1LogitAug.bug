@@ -1,0 +1,16 @@
+/* 
+Logit with data augmentation
+*/
+
+model{	
+	for(i in 1:n){	
+		y[i] ~ dbern(p[i]) 
+		p[i] <- step(y.star[i])*0.999 	
+		y.star[i] ~ dlogis(mu[i],1)  
+		mu[i] <- Beta[1] + Beta[2]*x1[i] + Beta[3]*x2[i]
+	}
+	Beta[1] ~ dnorm(0.0,1.0E-4)
+	Beta[2] ~ dnorm(0.0,1.0E-4)
+	Beta[3] ~ dnorm(0.0,1.0E-4)
+}
+

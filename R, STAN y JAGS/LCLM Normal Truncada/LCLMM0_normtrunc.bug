@@ -1,0 +1,25 @@
+/*
+Latent Class 
+Truncated Normal Distribution
+*/
+
+model{
+
+### MODEL = LIKELIHOOD
+   for(i in 1:n){		
+      outcome[i] ~ dnorm(mu,tau)T(cota,)
+   }
+
+### PRIOR
+   mu ~ dnorm(0.0,1.0E-3) 
+   tau ~ dgamma(0.01,0.01) 
+
+### PREDICTIONS 
+   pred[1] ~ dnorm(mu,tau)T(cota,)
+   v ~ dgamma(3/2,1/2)
+   sigma <- pow(tau,-0.5)
+   preda <- max(mu-sigma*sqrt(v),cota)
+   predb <- mu+sigma*sqrt(v) 
+   pred[2] ~ dunif(preda,predb) 
+
+}

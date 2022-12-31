@@ -1,0 +1,17 @@
+/* 
+Logit 
+*/
+
+model{	
+### Likelihood = Verosimilitud
+	for(i in 1:n){	
+		y[i] ~ dbern(p[i]) 
+###		logit(p[i]) <- eta[i] 
+		p[i] <- exp(eta[i])/(1+exp(eta[i]))
+		eta[i] <- Beta[3] + Beta[1]*x1[i] + Beta[2]*x2[i]
+	}
+### Prior
+	Beta[1] ~ dnorm(0.0,1.0E-4)
+	Beta[2] ~ dnorm(0.0,1.0E-4)
+	Beta[3] ~ dnorm(0.0,1.0E-4)
+}

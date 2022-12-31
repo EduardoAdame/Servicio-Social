@@ -1,0 +1,25 @@
+/*
+Linear Regression
+*/
+ 
+model{
+
+### Model = Likelihood
+for(i in 1:n){		
+	eta[i] <- x1[i]*Beta[1] + x2[i]*Beta[2] + Beta[3] 
+	y[i] ~ dnorm(eta[i],Tau)			
+}
+			
+### Prior
+	Beta ~ dmnorm(zeros,diagonalTau)
+	Tau ~ dgamma(a,b)
+     diagonalTau <- Tau*diagonal  ### prior conjugada
+	Sigma2 <- 1/Tau
+
+### Predict
+for(inew in 1:nnew){
+	eta.new[inew] <- x1.new[inew]*Beta[1] + x2.new[inew]*Beta[2] + Beta[3] 
+	y.new[inew] ~ dnorm(eta.new[inew],Tau)			
+}
+}
+
